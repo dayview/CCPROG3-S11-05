@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * Customer class representing store customers in the convenience store system
  * Handles customer operations including shopping cart, membership, and points
+ * @author Leon Pavino
+ * @version 1.0
  */
 public class Customer {
     private String customerID;
