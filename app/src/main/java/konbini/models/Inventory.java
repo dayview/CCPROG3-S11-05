@@ -78,7 +78,7 @@ public class Inventory {
      */
     public Product getProductByID(String productID) {
         for (Product p : products) {
-            if (p.getProductID().equals(productID)) {
+            if (p.getProductID().equalsIgnoreCase(productID)) {
                 return p;
             }
         }
@@ -152,6 +152,21 @@ public class Inventory {
         Product product = getProductByID(productID);
         if (product != null) {
             return product.reduceStock(amount);
+        }
+        return false;
+    }
+
+    /**
+     * Restores stock if transaction fails
+     * @param productID Product to restore
+     * @param amount Amount to restore
+     * @return true if stock restored successfully
+     */
+    public boolean restoreStock(String productID, int amount) {
+        Product product = getProductByID(productID);
+        if (product != null) {
+            product.restock(amount);
+            return true;
         }
         return false;
     }

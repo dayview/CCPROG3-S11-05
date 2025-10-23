@@ -171,20 +171,20 @@ public class Konbini {
         // Medications category products
         Category medications = inventory.getCategoryByName("Medications");
         Product m1 = new Product("M001", "Tylenol", 20.00, 10);
-        Product m2 = new Product("M001", "Advil", 15.00, 10);
-        Product m3 = new Product("M001", "Motrin", 30.00, 10);
-        Product m4 = new Product("M001", "Aleve", 25.00, 10);
-        Product m5 = new Product("M001", "Excedrin", 30.00, 10);
-        Product m6 = new Product("M001", "Bayer", 40.00, 10);
-        Product m7 = new Product("M001", "Midol", 20.00, 10);
-        Product m8 = new Product("M001", "Anacin", 30.00, 10);
-        Product m9 = new Product("M001", "Percogesic", 50.00, 10);
-        Product m10 = new Product("M001", "Aspirin", 20.00, 10);
-        Product m11 = new Product("M001", "Rolaids", 50.00, 10);
-        Product m12 = new Product("M001", "Maalox", 60.00, 10);
-        Product m13 = new Product("M001", "Mylanta", 40.00, 10);
-        Product m14 = new Product("M001", "Gaviscon", 20.00, 10);
-        Product m15 = new Product("M001", "Benadryl", 15.00, 10);
+        Product m2 = new Product("M002", "Advil", 15.00, 10);
+        Product m3 = new Product("M003", "Motrin", 30.00, 10);
+        Product m4 = new Product("M004", "Aleve", 25.00, 10);
+        Product m5 = new Product("M005", "Excedrin", 30.00, 10);
+        Product m6 = new Product("M006", "Bayer", 40.00, 10);
+        Product m7 = new Product("M007", "Midol", 20.00, 10);
+        Product m8 = new Product("M008", "Anacin", 30.00, 10);
+        Product m9 = new Product("M009", "Percogesic", 50.00, 10);
+        Product m10 = new Product("M010", "Aspirin", 20.00, 10);
+        Product m11 = new Product("M011", "Rolaids", 50.00, 10);
+        Product m12 = new Product("M012", "Maalox", 60.00, 10);
+        Product m13 = new Product("M013", "Mylanta", 40.00, 10);
+        Product m14 = new Product("M014", "Gaviscon", 20.00, 10);
+        Product m15 = new Product("M015", "Benadryl", 15.00, 10);
 
         medications.addProduct(m1);
         medications.addProduct(m2);
@@ -341,15 +341,41 @@ public class Konbini {
                     break;
 
                 case 2:
-                    cart.viewCart();
+                    if (cart.isEmpty()) {
+                        view.displayMessage("Cart is empty.");
+                    } else {
+                        cart.viewCart();
+                        String removeChoice = view.getInput("Remove item? (yes/no): ");
+                        if (removeChoice.equalsIgnoreCase("yes")) {
+                            String removeID = view.getInput("Enter Product ID to remove: ");
+                            CartItem itemToRemove = null;
+                            for (CartItem item : cart.getItems()) {
+                                if (item.getProduct().getProductID().equalsIgnoreCase(removeID)) {
+                                    itemToRemove = item;
+                                    break;
+                                }
+                            }
+                            if (itemToRemove != null) {
+                                controller.getInventory().restoreStock(
+                                        itemToRemove.getProduct().getProductID(),
+                                        itemToRemove.getQuantity()
+                                );
+                                cart.removeItem(removeID);
+                                view.displayMessage("Item removed from cart and returned to inventory.");
+                            } else {
+                                view.displayMessage("Product not found in cart.");
+                            }
+                        }
+                    }
                     break;
 
                 case 3:
                     if (cart.isEmpty()) {
-                        view.displayMessage("Cart is empty");
+                        view.displayMessage("Cart is empty.");
                     } else {
                         cart.viewCart();
                         double total = cart.getSubtotal() * 1.12;
+                        System.out.printf("Amount Due: ₱%.2f\n", total);
                         double payment = view.getDoubleInput("Enter payment amount: ₱");
 
                         Payment pay = new Payment(total, payment, new PaymentMethod(PaymentMethod.CASH));

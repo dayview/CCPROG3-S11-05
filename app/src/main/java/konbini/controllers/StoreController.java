@@ -52,20 +52,30 @@ public class StoreController {
             return;
         }
 
+        List<CartItem> cartItems = cart.getItems();
+
         Transaction transaction = new Transaction(customer, cart);
         transaction.processTransaction(payment);
 
-        Receipt receipt = transaction.generateReceipt();
+        if (transaction.getPayment() == null || !transaction.getPayment().validatePayment()) {
+            view.displayMessage("Transaction failed: Insufficient payment");
+            for (CartItem item : cartItems) {
+                inventory.restoreStock(item.getProduct().getProductID(), item.getQuantity());
+            }
+            view.displayMessage("Items returned to inventory");
+            return;
+        }
 
-        if (receipt != null){
+        Receipt receipt = transaction.generateReceipt();
+        if (receipt != null) {
             view.displayReceipt(receipt);
             try {
                 receipt.saveFile("receipts/" + transaction.getTransactionID() + ".txt");
             } catch (Exception e) {
                 view.displayMessage("Error saving receipt: " + e.getMessage());
             }
-            cart.clear();
         }
+        cart.clear();
     }
 
     /**
@@ -141,7 +151,7 @@ public class StoreController {
                 currentCart.addItem(product, quantity);
                 inventory.reduceStock(productID, quantity);
             } else {
-                view.displayMessage("Insufficient stock");
+                view.displayMessage(String.format("Insufficient stock. Available: %d", product.getQuantityStock()));
             }
         } else {
             view.displayMessage("Product not found");

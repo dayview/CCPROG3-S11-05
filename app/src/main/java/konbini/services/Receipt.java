@@ -3,6 +3,10 @@ package konbini.services;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Represents a payment receipt generated after a completed transaction
@@ -61,7 +65,7 @@ public class Receipt {
         DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String text = "";
 
-        text += "==== Kobini's Convenience Store Receipt ===\n";
+        text += "==== Konbini's Convenience Store Receipt ===\n";
         text += " Receipt ID : " + receiptID + "\n";
         text += "Date/Time : " + transaction.getTimestamp().format(d) + "\n";
 
@@ -101,13 +105,19 @@ public class Receipt {
     }
 
     public void saveFile(String path) throws IOException {
-        if(!canGenerateReceipt()) return;
+        if (!canGenerateReceipt()) return;
 
         String output = toDevice();
-        if(output.isEmpty()) return;
+        if (output.isEmpty()) return;
 
-        try(FileWriter fw = new FileWriter(path)){
-            fw.write(output);
+        Path p = Paths.get(path);
+        Path parent = p.getParent();
+        if (parent != null && !Files.exists(parent)) {
+            Files.createDirectories(parent);
+        }
+
+        try (var writer = Files.newBufferedWriter(p, StandardCharsets.UTF_8)) {
+            writer.write(output);
         }
     }
 }
