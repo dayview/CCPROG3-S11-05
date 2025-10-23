@@ -35,7 +35,7 @@ public class Receipt {
         DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String text = "";
 
-        text += "==== Convenience Store Receipt ===\n";
+        text += "==== Kobini's Convenience Store Receipt ===\n";
         text += " Receipt ID : " + receiptID + "\n";
         text += "Date/Time : " + transaction.getTimestamp().format(d) + "\n";
 
@@ -79,4 +79,5 @@ public class Receipt {
         fw.write(toDevice());
         fw.close();
     }
+
 }
