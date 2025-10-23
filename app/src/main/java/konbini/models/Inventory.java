@@ -31,7 +31,7 @@ public class Inventory {
         categories.add(new Category(1, "Food"));
         categories.add(new Category(2, "Beverages"));
         categories.add(new Category(3, "Toiletries"));
-        categories.add(new Category(4, "Cleaning Products"));
+        categories.add(new Category(4, "Home Care"));
         categories.add(new Category(5, "Medications"));
     }
 
