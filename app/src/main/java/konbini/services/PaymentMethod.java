@@ -36,6 +36,12 @@ public class PaymentMethod {
         this.details = detail == null ? "" : detail;
     }
 
+
+    /*
+    *   Validate and set payment mode name in case its in lowercase it will make it uppercase
+    * Prints warning if mode is invalid and retains previous valid mode
+    * @param name new mode name to set
+    */
     public void setModeName(String name) {
         if (name == null)
             return;
@@ -46,4 +52,5 @@ public class PaymentMethod {
             System.out.println("Invalid payment mode: " + name + " (using " + modeOfPayment + ")");
         }
     }
+
 }
