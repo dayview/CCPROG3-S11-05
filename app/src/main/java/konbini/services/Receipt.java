@@ -40,7 +40,7 @@ public class Receipt {
         }
         double amountDue = transaction.getAmountDue();
 
-        if(Double.Compare(amountDue, 0.0) <= 0){
+        if(Double.compare(amountDue, 0.0) <= 0){
             return true;
         }
         double amountPaid = transaction.getPayment().getAmountPaid();
@@ -100,4 +100,5 @@ public class Receipt {
     }
 
 }
+
 
