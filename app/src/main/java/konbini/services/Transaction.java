@@ -55,7 +55,13 @@ public class Transaction {
         if (pointsToRedeem >= 0)
             this.pointsToRedeem = pointsToRedeem;
     }
-
+    
+     /**
+     * Processes the entire transaction, applying discounts, tax, and loyalty logic.
+     * Validates payment sufficiency and computes earned points for members.
+     *
+     * @param payment the payment information used for this transaction
+     */
     public void processTransaction(Payment payment) {
         if (cart == null) {
             System.out.println("No cart found. Transaction not processed.");
@@ -182,4 +188,5 @@ public class Transaction {
 
 
 }
+
 
