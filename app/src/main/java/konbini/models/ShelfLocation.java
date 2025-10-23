@@ -4,7 +4,7 @@ package konbini.models;
  * ShelfLocation class representing physical location of products in the store
  * Manages shelf organization with row and column positioning
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 public class ShelfLocation {
     private String shelfID;

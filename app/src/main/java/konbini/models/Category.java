@@ -7,7 +7,7 @@ import java.util.List;
  * Category class representing product categories in the store
  * Manages grouping and retrieval of products by category
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 public class Category {
     private int categoryID;
@@ -47,7 +47,7 @@ public class Category {
 
     /**
      * Adds a product to this category
-     * @param product Product to add
+     * @param c Product to add
      */
     public void addSubCategory(Category c) {
         // TODO: To implement subcategory support (if necessary + talk to Doc Maan & Massi first)

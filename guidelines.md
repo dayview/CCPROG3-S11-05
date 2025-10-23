@@ -4,24 +4,48 @@
 ### 1. Folder Structure
 
 ```
-├───app
-    └───src
-        └───main
-            └───java
-                └───konbini
-                        ├───models
-                        └───services
+CCPROG3-S11-05
+└─── app
+    └─── src
+        └─── main
+            └─── java
+                └─── konbini
+                     ├───controllers
+                     │    └─── StoreController
+                     ├─── models
+                     │    ├─── enums
+                     │    │    └─── userRole
+                     │    ├─── Cart
+                     │    ├─── CartItem
+                     │    ├─── Category
+                     │    ├─── Customer
+                     │    ├─── Employee
+                     │    ├─── Inventory
+                     │    ├─── Order
+                     │    ├─── Product
+                     │    ├─── ShelfLocation
+                     │    ├─── User
+                     ├─── services
+                     │    ├─── LoginSystem
+                     │    ├─── Payment
+                     │    ├─── PaymentMethod
+                     │    ├─── Receipt
+                     │    ├─── ReceiptPrint
+                     │    ├─── Transaction
+                     ├─── views
+                     │    └─── StoreView
+                     └─── konbini
 ```
 * **
 
 ### 2. Naming Conventions
-* **Classes**: `PascalCase` → `
+* **Classes**: `PascalCase`
 * **Variables/Methods**: `camelCase`
 * **Constants**: `UPPER_CASE`
 
 ### 3. Branching & Git Workflow
 * **Main Branch** → always stable, working code
-* **Feature Branches** →
+* **Feature Branches**
 
   * `feature/<text1>-<text2>`
 
@@ -70,4 +94,4 @@ Example:
 public double calculateTotalTax(Total total) { ... }
 ```
 
-Created by Leon Pavino (last updated @ 2:26 AM - 10/20/2025)
+`Created by Leon Pavino (last updated @ 1:23 AM - 10/23/2025)`

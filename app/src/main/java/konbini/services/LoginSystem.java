@@ -68,8 +68,8 @@ public class LoginSystem {
     }
 
     /**
-     * Registers new customer
-     * @param customer Customer to register
+     * Registers new employee
+     * @param employee Employee to register
      */
     public void registerEmployee(Employee employee) {
         employees.add(employee);

@@ -4,7 +4,7 @@ package konbini.models;
  * CartItem class representing a single item in the shopping cart
  * Links product with purchase quantity
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 public class CartItem {
     private Product product;

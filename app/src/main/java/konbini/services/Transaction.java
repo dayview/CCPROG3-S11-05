@@ -1,12 +1,22 @@
+package konbini.services;
+
+import konbini.models.Cart;
+import konbini.models.Customer;
 import java.time.LocalDateTime;
 
+/**
+ * Manages the overall purchase transaction lifecycle in the Konbini system
+ * Handles computations for VAT, discounts, redeemed points, and loyalty credits while processing payments
+ * Serves as the core link between the Customer, Cart, Payment, and Receipt modules during checkout operations
+ * @author Massi Colcol
+ * @version 1.0
+ */
 public class Transaction {
     public static final double VAT_RATE = 0.12;
     public static final double SENIOR_DISCOUNT_RATE = 0.20;
 
     private String transactionID;
     private LocalDateTime timestamp;
-
     private Customer customer;
     private Cart cart;
     private boolean senior;
@@ -44,7 +54,7 @@ public class Transaction {
         this.payment = (payment == null)
                 ? new Payment(0, 0, new PaymentMethod(PaymentMethod.CASH))
                 : payment;
-        this.subtotal = round2(Math.max(0, cart.getSubTotal()));
+        this.subtotal = round2(Math.max(0, cart.getSubtotal()));
 
         if (senior) {
             this.seniorDiscountApplied = round2(subtotal * SENIOR_DISCOUNT_RATE);

@@ -1,7 +1,16 @@
+package konbini.services;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.*;
 
+/**
+ * Represents a payment receipt generated after a completed transaction
+ * Compiles purchase details, totals, discounts, and timestamp into a formatted text output for printing or saving
+ * Handles receipt rendering for both console view and file persistence within the Konbini system's services layer
+ * @author Massi Colcol
+ * @version 1.0
+ */
 public class Receipt {
     private String receiptID;
     private Transaction transaction;

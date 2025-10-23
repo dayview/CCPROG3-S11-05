@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Product class representing items sold in the convenience store
  * Handles product information including pricing, stock, location, and categorization
- * @author Leon Pavino and Massi Colcol
+ * @author Leon Pavino
  * @version 1.0
  */
 public class Product {
@@ -16,7 +16,7 @@ public class Product {
     private String variant;
     private int quantityStock;
     private String expirationDate;
-    private ShelfLocation shelflocation;
+    private ShelfLocation shelfLocation;
 
     /**
      * Full constructor for creating a Product with all attributes
@@ -179,7 +179,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("[%s] %s %s %s - ₱%.2f (Stock: %d",
+        return String.format("[%s] %s %s %s - ₱%.2f (Stock: %d)",
                 productID, brand, name, variant, price, quantityStock);
     }
 }

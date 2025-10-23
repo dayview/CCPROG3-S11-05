@@ -1,6 +1,7 @@
 package konbini.views;
 
 import konbini.models.*;
+import konbini.services.Receipt;
 import java.util.List;
 import java.util.Scanner;
 
@@ -90,7 +91,13 @@ public class StoreView {
      * Displays receipt
      * @param receipt Receipt to display
      */
-
+    public void displayReceipt(Receipt receipt) {
+        if (receipt == null) {
+            System.out.println("No receipt to display.");
+            return;
+        }
+        System.out.println("\n" + receipt.toDevice());
+    }
 
     /**
      * Displays generic message

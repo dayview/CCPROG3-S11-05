@@ -1,6 +1,7 @@
 package konbini.controllers;
 
 import konbini.models.*;
+import konbini.services.*;
 import konbini.views.StoreView;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * StoreController manages business logic and coordinates between Model and View
  * Implements MVC pattern for the convenience store application
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 public class StoreController {
     private Inventory inventory;
@@ -51,13 +52,18 @@ public class StoreController {
             return;
         }
 
-        String transactionID = "TXN" + System.currentTimeMillis();
-        Transaction transaction = new Transaction(transactionID, customer, cart);
+        Transaction transaction = new Transaction(customer, cart);
+        transaction.processTransaction(payment);
 
-        Receipt receipt = transaction.processTransaction(payment);
-        if (receipt != null) {
+        Receipt receipt = transaction.generateReceipt();
+
+        if (receipt != null){
             view.displayReceipt(receipt);
-            receipt.saveToFile("receipts/" + transactionID + ".txt");
+            try {
+                receipt.saveFile("receipts/" + transaction.getTransactionID() + ".txt");
+            } catch (Exception e) {
+                view.displayMessage("Error saving receipt: " + e.getMessage());
+            }
             cart.clear();
         }
     }
@@ -79,7 +85,7 @@ public class StoreController {
      * Handles loading inventory from file
      * @param path File path
      */
-    public void handleLoadInvetory(String path) {
+    public void handleLoadInventory(String path) {
         inventory.loadFile(path);
         view.displayMessage("Inventory loaded");
     }

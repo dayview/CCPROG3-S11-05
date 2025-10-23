@@ -2,15 +2,13 @@ package konbini.models;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Inventory class managing all products and categories in the store
  * Handles product operations, category management, and file persistence
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 
 public class Inventory {

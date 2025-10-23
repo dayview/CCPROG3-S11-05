@@ -1,3 +1,12 @@
+package konbini.services;
+
+/**
+ * Handles payment-related computations in the Konbini system
+ * Manages amounts due, payments received, change calculation, and method validation during transactions
+ * Ensures correct rounding and validation of payment data for receipt and balance generation
+ * @author Massi Colcol
+ * @version 1.0
+ */
 public class Payment {
     private double amountDue;
     private double amountPaid;
@@ -56,5 +65,4 @@ public class Payment {
     private static double round2(double v) {
         return Math.round(v * 100.0) / 100.0;
     }
-
 }

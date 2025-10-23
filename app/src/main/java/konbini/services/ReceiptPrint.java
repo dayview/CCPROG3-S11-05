@@ -1,3 +1,12 @@
+package konbini.services;
+
+/**
+ * Responsible for outputting and saving receipts in the Konbini system
+ * Provides utilities to print receipts on-screen or save them to a file for recordkeeping
+ * Serves as an interface between receipt data and physical or digital output devices in the application workflow
+ * @author Massi Colcol
+ * @version 1.0
+ */
 public class ReceiptPrint {
     public void printOnDevice(Receipt r) {
         if (r == null) {

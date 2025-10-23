@@ -1,5 +1,12 @@
-/*Payment Method */
+package konbini.services;
 
+/**
+ * Represents a payment method used in the Konbini system
+ * Supports cash, card, and mobile transactions and stores reference details such as transaction numbers
+ * Provides validation for payment mode input and ensures standardized names for consistency across the system
+ * @author Massi Colcol
+ * @version 1.0
+ */
 public class PaymentMethod {
     public static final String CASH = "CASH";
     public static final String CARD = "CARD";
@@ -37,7 +44,6 @@ public class PaymentMethod {
             modeOfPayment = u;
         } else {
             System.out.println("Invalid payment mode: " + name + " (using " + modeOfPayment + ")");
-
         }
     }
 }

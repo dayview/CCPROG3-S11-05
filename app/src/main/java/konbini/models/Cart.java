@@ -7,7 +7,7 @@ import java.util.List;
  * Cart class representing a customer's shopping cart
  * Manages cart items, quantities, and calculations
  * @author Leon Pavino
- * @version 1.0
+ * @version 1.1
  */
 public class Cart {
     private List<CartItem> items;
@@ -138,4 +138,16 @@ public class Cart {
         System.out.printf("Subtotal: ₱%.2f\n", getSubtotal());
     }
 
+    @Override
+    public String toString() {
+        if (isEmpty()) {
+            return "Cart is empty";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== CART ITEMS ===\n");
+        for (CartItem item : items) {
+            sb.append(item.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 }

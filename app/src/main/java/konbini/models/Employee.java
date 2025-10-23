@@ -1,11 +1,10 @@
 package konbini.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Employee class representing store employees in the convenience store system
  * Handles employee operations including project management and authentication
+ * @author Leon Pavino
+ * @version 1.1
  */
 public class Employee {
     private int employeeID;
@@ -27,7 +26,6 @@ public class Employee {
         this.password = password;
     }
 
-    // Getter methods
     public int getEmployeeID() {
         return employeeID;
     }
@@ -44,7 +42,6 @@ public class Employee {
         return password;
     }
 
-    // Setter methods
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }
