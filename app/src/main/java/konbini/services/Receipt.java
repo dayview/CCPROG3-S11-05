@@ -31,7 +31,33 @@ public class Receipt {
         return transaction;
     }
 
+    /*
+     * will only print a receipt if a transaction exist and
+     * amount due <= 0 or payment exist and amountPaid >= amountDue
+     */
+    public boolean canGenerateReceipt(){
+        if(transaction == null){
+            return false;
+        }
+        double amountDue = transaction.getAmountDue();
+
+        if(Double.compare(amountDue, 0.0) <= 0){
+            return true;
+        }
+
+        if(transaction.getPayment() == null){
+            return false;
+        }
+
+        double amountPaid = transaction.getPayment().getAmountPaid();
+        return Double.compare(amountPaid, amountDue) >= 0;
+    }
+
     public String toDevice() {
+        if(!canGenerateReceipt()){
+            return "";
+        }
+
         DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String text = "";
 
@@ -75,9 +101,13 @@ public class Receipt {
     }
 
     public void saveFile(String path) throws IOException {
-        FileWriter fw = new FileWriter(path);
-        fw.write(toDevice());
-        fw.close();
-    }
+        if(!canGenerateReceipt()) return;
 
+        String output = toDevice();
+        if(output.isEmpty()) return;
+
+        try(FileWriter fw = new FileWriter(path)){
+            fw.write(output);
+        }
+    }
 }
