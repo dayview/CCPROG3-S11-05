@@ -30,8 +30,27 @@ public class Receipt {
     public Transaction getTransaction() {
         return transaction;
     }
+    /*
+    * will only print a receipt if a transaction exist and 
+    * amount due <= 0 or payment exist and amountPaid >= amountDue
+    */
+    public boolean canGenerateReceipt(){
+        if(transaction == null){
+            return false;
+        }
+        double amountDue = transaction.getAmountDue();
 
+        if(Double.Compare(amountDue, 0.0) <= 0){
+            return true;
+        }
+        double amountPaid = transaction.getPayment().getAmountPaid();
+        return Double.compare(amountPaid, amountDue) >= 0;
+    }
     public String toDevice() {
+        if(!canGenerateReceipt()){
+            return "";
+        }
+        
         DateTimeFormatter d = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String text = "";
 
@@ -81,3 +100,4 @@ public class Receipt {
     }
 
 }
+
