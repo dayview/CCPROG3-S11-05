@@ -137,10 +137,6 @@ public class Transaction {
         return senior;
     }
 
-    public int isUsingPoints(){
-        return usePoints;
-    }
-
     public int getPointsToRedeem() {
         return pointsToRedeem;
     }
@@ -186,3 +182,4 @@ public class Transaction {
 
 
 }
+
