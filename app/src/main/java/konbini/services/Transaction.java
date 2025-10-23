@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Handles computations for VAT, discounts, redeemed points, and loyalty credits while processing payments
  * Serves as the core link between the Customer, Cart, Payment, and Receipt modules during checkout operations
  * @author Massi Colcol
- * @version 1.0
+ * @version 1.1 
  */
 public class Transaction {
     public static final double VAT_RATE = 0.12;
@@ -20,6 +20,7 @@ public class Transaction {
     private Customer customer;
     private Cart cart;
     private boolean senior;
+    private boolean usePoints;
     private int pointsToRedeem;
     private double subtotal;
     private double seniorDiscountApplied;
@@ -35,12 +36,21 @@ public class Transaction {
         this.transactionID = "T-" + System.currentTimeMillis();
         this.customer = customer;
         this.cart = cart;
+        this.usePoints = false; //default not to redeem the points
     }
 
     public void setSenior(boolean senior) {
         this.senior = senior;
     }
 
+    public void setUsePoints(boolean usePoints){
+        this.usePoints = usePoints;
+    }
+
+    public boolean isUsingPoints(){
+        return usePoints;
+    }
+    
     public void setPointsToRedeem(int pointsToRedeem) {
         if (pointsToRedeem >= 0)
             this.pointsToRedeem = pointsToRedeem;
@@ -66,16 +76,15 @@ public class Transaction {
             afterSenior = 0.0;
 
         this.pointsRedeemed = 0.0;
-        if (customer != null && customer.isMember() && pointsToRedeem > 0) {
+        if (usePoints && customer != null && customer.isMember() && pointsToRedeem > 0) {
             int available = customer.getPoints();
-            int usable = pointsToRedeem;
-            if (usable > available) {
-                usable = available;
-            }
+            int usable = Math.min (pointsToRedeem, available);
+            
             double newAmount = afterSenior - usable;
             if (newAmount < 0)
                 newAmount = 0;
             this.pointsRedeemed = round2(afterSenior - newAmount);
+            
             if (this.pointsRedeemed > 0) {
                 customer.redeemPoints((int) Math.round(this.pointsRedeemed));
                 afterSenior = newAmount;
@@ -102,8 +111,10 @@ public class Transaction {
         }
     }
 
+
+
     public Receipt generateReceipt() {
-        return new Receipt("R-" + transactionID, this);
+        return new Receipt("" + transactionID, this);
     }
 
     public String getTransactionID() {
@@ -124,6 +135,10 @@ public class Transaction {
 
     public boolean isSenior() {
         return senior;
+    }
+
+    public int isUsingPoints(){
+        return usePoints;
     }
 
     public int getPointsToRedeem() {
@@ -158,8 +173,16 @@ public class Transaction {
         return earnedPoints;
     }
 
+    /**
+    * Round values to 2 decimal places
+    *
+    * @param v value to round
+    * @return rounded value
+    */
+    
     private static double round2(double v) {
         return Math.round(v * 100.0) / 100.0;
     }
+
 
 }
