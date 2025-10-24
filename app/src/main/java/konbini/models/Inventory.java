@@ -52,7 +52,44 @@ public class Inventory {
         if (p != null) {
             p.setQuantityStock(quantity);
             products.add(p);
-            System.out.println("Product added: " + p.getName() + " (Qty: " + quantity + ")");
+
+            Category category = determineCategoryFromProductID(p.getProductID());
+            if (category != null) {
+                category.addProduct(p);
+                System.out.println("Product added: " + p.getName() + " | Qty: " + quantity + " | Category: " + category.getName());
+            } else {
+                System.out.println("Product added: " + p.getName() + " | Qty: " + quantity + " | WARNING: No category assigned.");
+            }
+        }
+    }
+
+    /**
+     * Determines the category based on product ID prefix
+     * @param productID Product identifier (e.g., "F001", "B002", "T003")
+     * @return Category object or null if no match
+     */
+    private Category determineCategoryFromProductID(String productID) {
+        if (productID == null || productID.isEmpty()) {
+            return null;
+        }
+
+        char prefix = productID.toUpperCase().charAt(0);
+
+        switch (prefix) {
+            case 'F':
+                return getCategoryByName("Food");
+            case 'B':
+                return getCategoryByName("Beverages");
+            case 'T':
+                return getCategoryByName("Toiletries");
+            case 'H':
+                return getCategoryByName("Home Care");
+            case 'M':
+                return getCategoryByName("Medications");
+            case 'G':
+                return getCategoryByName("Food");
+            default:
+                return null;
         }
     }
 
