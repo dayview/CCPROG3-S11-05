@@ -92,6 +92,22 @@ public class StoreController {
     }
 
     /**
+     * Handles product update
+     * @param productID Product to update
+     * @param name New name
+     * @param price New price
+     * @param brand New brand
+     */
+    public void handleUpdateProduct(String productID, String name, double price, String brand) {
+        if (currentEmployee == null) {
+            view.displayMessage("Access denied: Employee login required");
+            return;
+        }
+        inventory.updateProductInfo(productID, name, price, brand);
+        view.displayMessage("Product updated successfully");
+    }
+
+    /**
      * Handles loading inventory from file
      * @param path File path
      */
@@ -129,15 +145,37 @@ public class StoreController {
     }
 
     /**
+     * Handles employee login and sets currentEmployee
+     * @param employee Logged-in employee object
+     */
+    public void setCurrentEmployee(Employee employee) {
+        this.currentEmployee = employee;
+    }
+
+    /**
+     * Clears current employee (logout)
+     */
+    public void clearCurrentEmployee() {
+        this.currentEmployee = null;
+    }
+
+    /**
+     * Gets current employee
+     * @return Current employee or null
+     */
+    public Employee getCurrentEmployee() {
+        return currentEmployee;
+    }
+
+    /* /**
      * Handles employee login
      * @param employeeID Employee ID
      * @param password Password
      * @return true if login successful
-     */
     public boolean handleEmployeeLogin(int employeeID, String password) {
         currentEmployee = new Employee(employeeID, "Employee", "Staff", password);
         return true;
-    }
+    } */
 
     /**
      * Adds product to current cart

@@ -406,6 +406,8 @@ public class Konbini {
             return;
         }
 
+        controller.setCurrentEmployee(employee);
+
         boolean loggedIn = true;
 
         while (loggedIn) {
@@ -430,8 +432,36 @@ public class Konbini {
                     break;
 
                 case 3:
-                    view.displayMessage("Update feature: Enter product details");
-                    // TODO
+                    String updateID = view.getInput("Product ID to update: ");
+                    Product existingProduct = controller.getInventory().getProductByID(updateID);
+
+                    if (existingProduct == null) {
+                        view.displayMessage("Product not found: " + updateID);
+                    } else {
+                        view.displayMessage("Current Product: " + existingProduct);
+                        view.displayMessage("Enter new details (press Enter to keep current value):");
+
+                        String newName = view.getInput("New Name [" + existingProduct.getName() + "]: ");
+                        if (newName.trim().isEmpty()) {
+                            newName = existingProduct.getName();
+                        }
+
+                        String priceInput = view.getInput("New Price [" + existingProduct.getPrice() + "]: ");
+                        double newPrice = existingProduct.getPrice();
+                        if (!priceInput.trim().isEmpty()) {
+                            try {
+                                newPrice = Double.parseDouble(priceInput);
+                            } catch (NumberFormatException e) {
+                                view.displayMessage("Invalid price, keeping current value.");
+                            }
+                        }
+
+                        String newBrand = view.getInput("New Brand [" + existingProduct.getBrand() + "]: ");
+                        if (newBrand.trim().isEmpty()) {
+                            newBrand = existingProduct.getBrand();
+                        }
+                        controller.handleUpdateProduct(updateID, newName, newPrice, newBrand);
+                    }
                     break;
 
                 case 4:
@@ -450,6 +480,7 @@ public class Konbini {
 
                 case 7:
                     loggedIn = false;
+                    controller.clearCurrentEmployee();
                     view.displayMessage("Logged out successfully");
                     break;
 
